@@ -6,7 +6,19 @@ const { generalLimiter, authLimiter, betLimiter } = require('./middleware/rateLi
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
+const path = require('path');
 
+// Servir frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Rota raiz
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'))
+});
+
+// Tuas rotas da API continuam normal
+app.use('/api/auth', require('./routes/auth'))
+// ... resto das rotas
 // ===== SEGURANÇA =====
 securityConfig(app);
 
