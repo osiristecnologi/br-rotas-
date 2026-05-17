@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BR ROTAS - Painel Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../frontend/css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="header-left">
+            <div class="logo" onclick="window.location.href='../frontend/index.html'">
+                <div class="logo-icon"></div>
+                <div>
+                    <span class="logo-text-br">BR</span> <span class="logo-text-rotas">ROTAS</span>
+                    <span class="logo-tagline">painel administrativo</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="balance-display">
+                <div>
+                    <div class="balance-label">Admin</div>
+                    <div class="balance-value">Carlos Pereira</div>
+                </div>
+            </div>
+            <div class="user-avatar" style="background:linear-gradient(135deg,var(--yellow-primary),var(--yellow-dark))">CP</div>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <h3>
+                    <i class="fas fa-shield-alt" style="color:var(--red-primary)"></i>
+                    Admin
+                    <span class="admin-badge">PRO</span>
+                </h3>
+            </div>
+            <div class="admin-nav">
+                <div class="admin-nav-item active" onclick="switchAdminTab(this, 'dashboard')">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </div>
+                <div class="admin-nav-item" onclick="switchAdminTab(this, 'users')">
+                    <i class="fas fa-users"></i> Usuários
+                </div>
+                <div class="admin-nav-item" onclick="switchAdminTab(this, 'bets')">
+                    <i class="fas fa-receipt"></i> Apostas
+                </div>
+                <div class="admin-nav-item" onclick="switchAdminTab(this, 'games')">
+                    <i class="fas fa-futbol"></i> Jogos & Odds
+                </div>
+                <div class="admin-nav-item" onclick="switchAdminTab(this, 'transactions')">
+                    <i class="fas fa-exchange-alt"></i> Transações
+                </div>
+                <div class="admin-nav-item" onclick="switchAdminTab(this, 'reports')">
+                    <i class="fas fa-file-alt"></i> Relatórios
+                </div>
+                <div class="admin-nav-item" onclick="switchAdminTab(this, 'settings')">
+                    <i class="fas fa-cog"></i> Configurações
+                </div>
+                <div class="admin-nav-item" onclick="window.location.href='../frontend/index.html'" style="margin-top:20px;border-top:1px solid var(--border-color);padding-top:16px">
+                    <i class="fas fa-arrow-left"></i> Voltar ao Site
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-main">
+            <!-- Dashboard -->
+            <div id="adminDashboard" class="admin-tab-content active">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                    <div>
+                        <h2 style="font-size:1.3rem;font-weight:800">Dashboard</h2>
+                        <p style="font-size:0.82rem;color:var(--text-muted)">Visão geral da plataforma</p>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                        <button class="admin-btn secondary"><i class="fas fa-calendar"></i> Hoje</button>
+                        <button class="admin-btn primary"><i class="fas fa-download"></i> Exportar</button>
+                    </div>
+                </div>
+
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card green">
+                        <span class="stat-change up"><i class="fas fa-arrow-up"></i> +12.5%</span>
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-label">Usuários Ativos</div>
+                    </div>
+                    <div class="admin-stat-card blue">
+                        <span class="stat-change up"><i class="fas fa-arrow-up"></i> +8.3%</span>
+                        <div class="stat-icon"><i class="fas fa-receipt"></i></div>
+                        <div class="stat-value">15,234</div>
+                        <div class="stat-label">Apostas Hoje</div>
+                    </div>
+                    <div class="admin-stat-card yellow">
+                        <span class="stat-change up"><i class="fas fa-arrow-up"></i> +22.1%</span>
+                        <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                        <div class="stat-value">R$ 847K</div>
+                        <div class="stat-label">Volume Total</div>
+                    </div>
+                    <div class="admin-stat-card red">
+                        <span class="stat-change down"><i class="fas fa-arrow-down"></i> -3.2%</span>
+                        <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                        <div class="stat-value">R$ 124K</div>
+                        <div class="stat-label">Lucro Líquido</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h4><i class="fas fa-chart-bar" style="color:var(--green-primary)"></i> Volume de Apostas (Últimos 7 dias)</h4>
+                    <div class="chart-placeholder">
+                        <div class="chart-bar" style="height:45%"><span class="chart-tooltip">Seg: R$ 98K</span></div>
+                        <div class="chart-bar" style="height:62%"><span class="chart-tooltip">Ter: R$ 134K</span></div>
+                        <div class="chart-bar" style="height:55%"><span class="chart-tooltip">Qua: R$ 119K</span></div>
+                        <div class="chart-bar" style="height:78%"><span class="chart-tooltip">Qui: R$ 168K</span></div>
+                        <div class="chart-bar" style="height:85%"><span class="chart-tooltip">Sex: R$ 183K</span></div>
+                        <div class="chart-bar" style="height:100%"><span class="chart-tooltip">Sáb: R$ 216K</span></div>
+                        <div class="chart-bar" style="height:70%"><span class="chart-tooltip">Dom: R$ 151K</span></div>
+                    </div>
+                </div>
+
+                <div class="admin-table-container">
+                    <div class="admin-table-header">
+                        <h4>Últimas Apostas</h4>
+                        <div class="admin-table-actions">
+                            <button class="admin-btn secondary"><i class="fas fa-filter"></i> Filtrar</button>
+                        </div>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>ID</th><th>Usuário</th><th>Jogo</th><th>Tipo</th><th>Odd</th><th>Valor</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-family:'JetBrains Mono';font-size:0.75rem">#BET-4821</td>
+                                <td><div class="user-cell"><div class="avatar">JS</div><span>João Silva</span></div></td>
+                                <td>Flamengo vs Palmeiras</td>
+                                <td style="font-size:0.75rem">Resultado Final</td>
+                                <td style="font-family:'JetBrains Mono'">2.05</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 100</td>
+                                <td><span class="status-badge won">Ganha</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:'JetBrains Mono';font-size:0.75rem">#BET-4820</td>
+                                <td><div class="user-cell"><div class="avatar" style="background:var(--gradient-green)">MR</div><span>Maria Rocha</span></div></td>
+                                <td>Atlético-MG vs Corinthians</td>
+                                <td style="font-size:0.75rem">Ambas Marcam</td>
+                                <td style="font-family:'JetBrains Mono'">1.85</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 200</td>
+                                <td><span class="status-badge pending">Pendente</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:'JetBrains Mono';font-size:0.75rem">#BET-4819</td>
+                                <td><div class="user-cell"><div class="avatar" style="background:linear-gradient(135deg,var(--yellow-primary),var(--yellow-dark))">CP</div><span>Carlos Pereira</span></div></td>
+                                <td>São Paulo vs Grêmio</td>
+                                <td style="font-size:0.75rem">Dupla Chance</td>
+                                <td style="font-family:'JetBrains Mono'">1.45</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 500</td>
+                                <td><span class="status-badge lost">Perdida</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users -->
+            <div id="adminUsers" class="admin-tab-content" style="display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                    <h2 style="font-size:1.3rem;font-weight:800">Gerenciamento de Usuários</h2>
+                    <button class="admin-btn primary"><i class="fas fa-user-plus"></i> Novo Usuário</button>
+                </div>
+                <div class="admin-table-container">
+                    <div class="admin-table-header">
+                        <h4>Lista de Usuários</h4>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>Usuário</th><th>Email</th><th>Role</th><th>Saldo</th><th>Status</th><th>Cadastro</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="user-cell"><div class="avatar">JS</div><div><div style="font-weight:600">João Silva</div><div style="font-size:0.7rem;color:var(--text-muted)">ID: #USR-001</div></div></div></td>
+                                <td style="color:var(--text-muted);font-size:0.75rem">joao@email.com</td>
+                                <td><span class="role-badge vip">VIP</span></td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">R$ 1.250,75</td>
+                                <td><span class="status-dot online"></span> Online</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">15/01/2024</td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><div class="avatar" style="background:var(--gradient-green)">MR</div><div><div style="font-weight:600">Maria Rocha</div><div style="font-size:0.7rem;color:var(--text-muted)">ID: #USR-002</div></div></div></td>
+                                <td style="color:var(--text-muted);font-size:0.75rem">maria@email.com</td>
+                                <td><span class="role-badge user">Usuário</span></td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">R$ 340,00</td>
+                                <td><span class="status-dot online"></span> Online</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">22/02/2024</td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><div class="avatar" style="background:linear-gradient(135deg,var(--yellow-primary),var(--yellow-dark))">CP</div><div><div style="font-weight:600">Carlos Pereira</div><div style="font-size:0.7rem;color:var(--text-muted)">ID: #USR-003</div></div></div></td>
+                                <td style="color:var(--text-muted);font-size:0.75rem">carlos@email.com</td>
+                                <td><span class="role-badge admin">Admin</span></td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">R$ 5.000,00</td>
+                                <td><span class="status-dot offline"></span> Offline</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">01/01/2024</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bets -->
+            <div id="adminBets" class="admin-tab-content" style="display:none">
+                <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:20px">Gerenciamento de Apostas</h2>
+                <div class="admin-stats-grid" style="grid-template-columns:repeat(3,1fr)">
+                    <div class="admin-stat-card green">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-value">12,456</div>
+                        <div class="stat-label">Apostas Ganhos</div>
+                    </div>
+                    <div class="admin-stat-card red">
+                        <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
+                        <div class="stat-value">8,234</div>
+                        <div class="stat-label">Apostas Perdidas</div>
+                    </div>
+                    <div class="admin-stat-card blue">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-value">3,421</div>
+                        <div class="stat-label">Apostas Pendentes</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games -->
+            <div id="adminGames" class="admin-tab-content" style="display:none">
+                <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:20px">Gerenciamento de Jogos & Odds</h2>
+                <div style="display:flex;gap:12px;margin-bottom:16px">
+                    <button class="admin-btn primary"><i class="fas fa-plus"></i> Adicionar Jogo</button>
+                    <button class="admin-btn secondary"><i class="fas fa-sync"></i> Atualizar Odds</button>
+                </div>
+            </div>
+
+            <!-- Transactions -->
+            <div id="adminTransactions" class="admin-tab-content" style="display:none">
+                <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:20px">Transações Financeiras</h2>
+                <div class="admin-stats-grid" style="grid-template-columns:repeat(2,1fr)">
+                    <div class="admin-stat-card green">
+                        <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
+                        <div class="stat-value">R$ 2.4M</div>
+                        <div class="stat-label">Depósitos (Mês)</div>
+                    </div>
+                    <div class="admin-stat-card red">
+                        <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
+                        <div class="stat-value">R$ 1.8M</div>
+                        <div class="stat-label">Saques (Mês)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports -->
+            <div id="adminReports" class="admin-tab-content" style="display:none">
+                <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:20px">Relatórios</h2>
+                <div class="admin-stats-grid" style="grid-template-columns:repeat(3,1fr)">
+                    <div class="admin-stat-card green"><div class="stat-icon"><i class="fas fa-chart-pie"></i></div><div class="stat-value">R$ 124K</div><div class="stat-label">Lucro Mensal</div></div>
+                    <div class="admin-stat-card blue"><div class="stat-icon"><i class="fas fa-user-plus"></i></div><div class="stat-value">+342</div><div class="stat-label">Novos Usuários</div></div>
+                    <div class="admin-stat-card yellow"><div class="stat-icon"><i class="fas fa-percentage"></i></div><div class="stat-value">4.8%</div><div class="stat-label">Margem Média</div></div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div id="adminSettings" class="admin-tab-content" style="display:none">
+                <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:20px">Configurações</h2>
+                <div class="security-card">
+                    <h4><i class="fas fa-shield-alt" style="color:var(--green-primary)"></i> Segurança da Plataforma</h4>
+                    <div class="security-features">
+                        <div class="security-feature"><i class="fas fa-lock"></i><span>SSL/TLS Encryption</span></div>
+                        <div class="security-feature"><i class="fas fa-key"></i><span>JWT Authentication</span></div>
+                        <div class="security-feature"><i class="fas fa-shield-alt"></i><span>Rate Limiting</span></div>
+                        <div class="security-feature"><i class="fas fa-fingerprint"></i><span>2FA Autenticação</span></div>
+                        <div class="security-feature"><i class="fas fa-database"></i><span>Hash BCrypt</span></div>
+                        <div class="security-feature"><i class="fas fa-eye-slash"></i><span>Data Protection LGPD</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+                                                 </html>
