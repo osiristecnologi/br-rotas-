@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BR ROTAS - Sua Casa de Apostas Brasileira</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+        <div class="header-left">
+            <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <div>
+                    <span class="logo-text-br">BR</span> <span class="logo-text-rotas">ROTAS</span>
+                    <span class="logo-tagline">sua casa de apostas brasileira</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="main-nav" id="mainNav">
+            <div class="nav-item active" onclick="switchNavTab(this, 'home')">
+                <i class="fas fa-home"></i> Home
+            </div>
+            <div class="nav-item" onclick="switchNavTab(this, 'live')">
+                <i class="fas fa-broadcast-tower"></i> Ao Vivo
+                <span class="live-dot"></span>
+            </div>
+            <div class="nav-item" onclick="switchNavTab(this, 'futebol')">
+                <i class="fas fa-futbol"></i> Futebol
+            </div>
+            <div class="nav-item" onclick="switchNavTab(this, 'ligas')">
+                <i class="fas fa-trophy"></i> Ligas
+            </div>
+            <div class="nav-item" onclick="switchNavTab(this, 'apostas')">
+                <i class="fas fa-receipt"></i> Minhas Apostas
+            </div>
+            <div class="nav-item" onclick="switchNavTab(this, 'carteira')">
+                <i class="fas fa-wallet"></i> Carteira
+            </div>
+            <div class="nav-item" onclick="switchNavTab(this, 'suporte')">
+                <i class="fas fa-headset"></i> Suporte
+            </div>
+        </nav>
+
+        <div class="header-right">
+            <div class="balance-display">
+                <div>
+                    <div class="balance-label">Saldo</div>
+                    <div class="balance-value" id="headerBalance">R$ 1.250,75</div>
+                </div>
+            </div>
+            <button class="btn-deposit" onclick="showDepositModal()">
+                <i class="fas fa-plus"></i> Depositar
+            </button>
+            <button class="btn-withdraw">Sacar</button>
+            <div class="header-icon-btn" onclick="toggleNotifications()" style="position:relative">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+                <div class="notification-dropdown" id="notifDropdown">
+                    <div class="notification-header">
+                        <h4>Notificações</h4>
+                        <span>Marcar todas como lidas</span>
+                    </div>
+                    <div class="notification-list">
+                        <div class="notification-item">
+                            <div class="notif-icon" style="background:rgba(0,230,118,0.1);color:var(--green-primary)">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="notif-text">
+                                <p><strong>Parabéns!</strong> Você ganhou R$ 205,00 na aposta Flamengo vs Palmeiras</p>
+                                <div class="time">Há 5 minutos</div>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notif-icon" style="background:rgba(41,121,255,0.1);color:var(--blue-primary)">
+                                <i class="fas fa-futbol"></i>
+                            </div>
+                            <div class="notif-text">
+                                <p>Jogo <strong>Atlético-MG vs Corinthians</strong> está ao vivo agora!</p>
+                                <div class="time">Há 12 minutos</div>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notif-icon" style="background:rgba(255,214,0,0.1);color:var(--yellow-primary)">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="notif-text">
+                                <p><strong>Bônus disponível!</strong> Receba 100% até R$ 500 no primeiro depósito</p>
+                                <div class="time">Há 1 hora</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="position:relative">
+                <div class="user-avatar" onclick="toggleProfile()" id="userAvatar">JS</div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="profile-info">
+                        <div class="avatar">JS</div>
+                        <div class="info">
+                            <div class="name">João Silva</div>
+                            <div class="email">joao@email.com</div>
+                        </div>
+                    </div>
+                    <div class="profile-menu-item" onclick="showToast('Perfil em breve', 'info')">
+                        <i class="fas fa-user"></i> Meu Perfil
+                    </div>
+                    <div class="profile-menu-item" onclick="window.location.href='../admin/index.html'">
+                        <i class="fas fa-shield-alt"></i> Painel Admin
+                    </div>
+                    <div class="profile-menu-item" onclick="showToast('Histórico carregado', 'info')">
+                        <i class="fas fa-history"></i> Histórico de Apostas
+                    </div>
+                    <div class="profile-menu-item" onclick="showToast('Transações carregadas', 'info')">
+                        <i class="fas fa-exchange-alt"></i> Transações
+                    </div>
+                    <div class="profile-menu-item danger" onclick="showToast('Sessão encerrada', 'info')">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="nav-item active" onclick="switchNavTab(this, 'home'); closeMobileMenu()">
+            <i class="fas fa-home"></i> Home
+        </div>
+        <div class="nav-item" onclick="switchNavTab(this, 'live'); closeMobileMenu()">
+            <i class="fas fa-broadcast-tower"></i> Ao Vivo
+            <span class="live-dot"></span>
+        </div>
+        <div class="nav-item" onclick="switchNavTab(this, 'futebol'); closeMobileMenu()">
+            <i class="fas fa-futbol"></i> Futebol
+        </div>
+        <div class="nav-item" onclick="switchNavTab(this, 'ligas'); closeMobileMenu()">
+            <i class="fas fa-trophy"></i> Ligas
+        </div>
+        <div class="nav-item" onclick="switchNavTab(this, 'apostas'); closeMobileMenu()">
+            <i class="fas fa-receipt"></i> Minhas Apostas
+        </div>
+        <div class="nav-item" onclick="switchNavTab(this, 'carteira'); closeMobileMenu()">
+            <i class="fas fa-wallet"></i> Carteira
+        </div>
+        <div class="nav-item" onclick="switchNavTab(this, 'suporte'); closeMobileMenu()">
+            <i class="fas fa-headset"></i> Suporte
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <div class="content-area">
+
+            <!-- LIVE BANNER -->
+            <div class="live-banner animate-in">
+                <div class="live-banner-content">
+                    <div class="live-banner-left">
+                        <div class="live-badge">
+                            <span class="dot"></span> AO VIVO
+                        </div>
+                        <h2>🔥 Brasileirão Série A - Rodada 28</h2>
+                        <p>Aposte ao vivo nos melhores jogos do campeonato brasileiro</p>
+                    </div>
+                    <button class="live-banner-cta" onclick="showToast('Carregando jogos ao vivo...', 'info')">
+                        Apostar Agora <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- QUICK NAV -->
+            <div class="quick-nav">
+                <div class="quick-nav-item active">
+                    <i class="fas fa-fire" style="color: var(--orange-primary)"></i> Destaques
+                    <span class="count">24</span>
+                </div>
+                <div class="quick-nav-item">
+                    <i class="fas fa-futbol" style="color: var(--green-primary)"></i> Futebol
+                    <span class="count">156</span>
+                </div>
+                <div class="quick-nav-item">
+                    <i class="fas fa-basketball-ball" style="color: var(--orange-primary)"></i> Basquete
+                    <span class="count">42</span>
+                </div>
+                <div class="quick-nav-item">
+                    <i class="fas fa-table-tennis" style="color: var(--blue-primary)"></i> Tênis
+                    <span class="count">28</span>
+                </div>
+                <div class="quick-nav-item">
+                    <i class="fas fa-volleyball-ball" style="color: var(--yellow-primary)"></i> Vôlei
+                    <span class="count">15</span>
+                </div>
+                <div class="quick-nav-item">
+                    <i class="fas fa-gamepad" style="color: var(--blue-primary)"></i> E-Sports
+                    <span class="count">38</span>
+                </div>
+            </div>
+
+            <!-- PROMO CARDS -->
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <div class="promo-badge">NOVO</div>
+                    <div class="promo-icon">🎁</div>
+                    <h4>Bônus de Boas-Vindas</h4>
+                    <p>Receba 100% até R$ 500 no seu primeiro depósito. Aposte no futebol brasileiro!</p>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-badge">LIVE</div>
+                    <div class="promo-icon">⚡</div>
+                    <h4>Ao Vivo com Cashout</h4>
+                    <p>Feche suas apostas ao vivo com Cashout e garanta seus lucros a qualquer momento.</p>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-badge">VIP</div>
+                    <div class="promo-icon">👑</div>
+                    <h4>Programa VIP</h4>
+                    <p>Acumule pontos com cada aposta e troque por bônus, freebets e prêmios exclusivos.</p>
+                </div>
+            </div>
+
+            <!-- BRASILEIRÃO SÉRIE A -->
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="comp-icon" style="background: linear-gradient(135deg, #00e676, #00c853);"></div>
+                    Brasileirão Série A
+                    <span class="match-count">8 jogos disponíveis</span>
+                </div>
+                <span class="view-all">Ver todos <i class="fas fa-chevron-right"></i></span>
+            </div>
+
+            <!-- LIVE MATCH -->
+            <div class="match-card live-card animate-in" id="match1">
+                <div class="match-header">
+                    <div class="match-league">
+                        <div class="league-icon">🇧🇷</div>
+                        Brasileirão Série A • Rodada 28
+                    </div>
+                    <div class="match-time live">
+                        <i class="fas fa-circle" style="font-size:0.5rem"></i>
+                        AO VIVO • <span class="timer" id="match1Timer">2º Tempo - 67'</span>
+                    </div>
+                </div>
+                <div class="match-teams">
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(255,0,0,0.15);color:#ff4444">FLA</div>
+                            <span class="team-name">Flamengo</span>
+                        </div>
+                        <span class="team-score winning" id="match1ScoreHome">2</span>
+                    </div>
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(0,128,0,0.15);color:#00aa00">PAL</div>
+                            <span class="team-name">Palmeiras</span>
+                        </div>
+                        <span class="team-score" id="match1ScoreAway">1</span>
+                    </div>
+                </div>
+                <div class="odds-row">
+                    <div class="odd-btn selected" onclick="addBetSlip(this, 'Flamengo vs Palmeiras', 'Flamengo', 'Resultado Final', 2.05)">
+                        <span class="odd-label">1</span>
+                        <span class="odd-value">2.05</span>
+                        <span class="trend-up"><i class="fas fa-arrow-up"></i></span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Flamengo vs Palmeiras', 'Empate', 'Resultado Final', 3.40)">
+                        <span class="odd-label">X</span>
+                        <span class="odd-value">3.40</span>
+                        <span class="trend-down"><i class="fas fa-arrow-down"></i></span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Flamengo vs Palmeiras', 'Palmeiras', 'Resultado Final', 3.75)">
+                        <span class="odd-label">2</span>
+                        <span class="odd-value">3.75</span>
+                        <span class="trend-up"><i class="fas fa-arrow-up"></i></span>
+                    </div>
+                </div>
+                <button class="match-expand-btn" onclick="toggleMatchStats('match1')">
+                    <i class="fas fa-chart-bar"></i> Ver estatísticas
+                </button>
+                <div class="match-stats" id="match1Stats">
+                    <div class="stat-row">
+                        <span class="stat-val">52%</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar"><div class="stat-bar-fill home" style="width:52%"></div></div>
+                            <span class="stat-label">Posse de bola</span>
+                            <div class="stat-bar"><div class="stat-bar-fill away" style="width:48%"></div></div>
+                        </div>
+                        <span class="stat-val">48%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-val">14</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar"><div class="stat-bar-fill home" style="width:61%"></div></div>
+                            <span class="stat-label">Finalizações</span>
+                            <div class="stat-bar"><div class="stat-bar-fill away" style="width:39%"></div></div>
+                        </div>
+                        <span class="stat-val">9</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-val">6</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar"><div class="stat-bar-fill home" style="width:60%"></div></div>
+                            <span class="stat-label">Escanteios</span>
+                            <div class="stat-bar"><div class="stat-bar-fill away" style="width:40%"></div></div>
+                        </div>
+                        <span class="stat-val">4</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-val">2</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar"><div class="stat-bar-fill home" style="width:40%"></div></div>
+                            <span class="stat-label">Cartões</span>
+                            <div class="stat-bar"><div class="stat-bar-fill away" style="width:60%"></div></div>
+                        </div>
+                        <span class="stat-val">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UPCOMING MATCHES -->
+            <div class="match-card animate-in">
+                <div class="match-header">
+                    <div class="match-league">
+                        <div class="league-icon">🇷</div>
+                        Brasileirão Série A • Rodada 28
+                    </div>
+                    <div class="match-time">Hoje 16:00</div>
+                </div>
+                <div class="match-teams">
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(255,0,0,0.1);color:#ff3333">CAM</div>
+                            <span class="team-name">Atlético-MG</span>
+                        </div>
+                        <span class="team-score">-</span>
+                    </div>
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(0,0,0,0.3);color:#fff">COR</div>
+                            <span class="team-name">Corinthians</span>
+                        </div>
+                        <span class="team-score">-</span>
+                    </div>
+                </div>
+                <div class="odds-row">
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Atlético-MG vs Corinthians', 'Atlético-MG', 'Resultado Final', 1.95)">
+                        <span class="odd-label">1</span><span class="odd-value">1.95</span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Atlético-MG vs Corinthians', 'Empate', 'Resultado Final', 3.30)">
+                        <span class="odd-label">X</span><span class="odd-value">3.30</span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Atlético-MG vs Corinthians', 'Corinthians', 'Resultado Final', 4.10)">
+                        <span class="odd-label">2</span><span class="odd-value">4.10</span>
+                        <span class="trend-up"><i class="fas fa-arrow-up"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="match-card animate-in">
+                <div class="match-header">
+                    <div class="match-league">
+                        <div class="league-icon">🇧🇷</div>
+                        Brasileirão Série A • Rodada 28
+                    </div>
+                    <div class="match-time">Hoje 18:30</div>
+                </div>
+                <div class="match-teams">
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(255,0,0,0.1);color:#fff">SPF</div>
+                            <span class="team-name">São Paulo</span>
+                        </div>
+                        <span class="team-score">-</span>
+                    </div>
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(0,0,128,0.15);color:#4466ff">GRE</div>
+                            <span class="team-name">Grêmio</span>
+                        </div>
+                        <span class="team-score">-</span>
+                    </div>
+                </div>
+                <div class="odds-row">
+                    <div class="odd-btn" onclick="addBetSlip(this, 'São Paulo vs Grêmio', 'São Paulo', 'Resultado Final', 1.80)">
+                        <span class="odd-label">1</span><span class="odd-value">1.80</span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'São Paulo vs Grêmio', 'Empate', 'Resultado Final', 3.60)">
+                        <span class="odd-label">X</span><span class="odd-value">3.60</span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'São Paulo vs Grêmio', 'Grêmio', 'Resultado Final', 4.60)">
+                        <span class="odd-label">2</span><span class="odd-value">4.60</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COPA DO BRASIL -->
+            <div class="section-header" style="margin-top:20px">
+                <div class="section-title">
+                    <div class="comp-icon" style="background: linear-gradient(135deg, #2979ff, #1565c0);"></div>
+                    Copa do Brasil • Oitavas de Final
+                    <span class="match-count">4 jogos disponíveis</span>
+                </div>
+                <span class="view-all">Ver todos <i class="fas fa-chevron-right"></i></span>
+            </div>
+
+            <div class="match-card animate-in">
+                <div class="match-header">
+                    <div class="match-league">
+                        <div class="league-icon">🇧🇷</div>
+                        Copa do Brasil • Oitavas de Final - Ida
+                    </div>
+                    <div class="match-time">Hoje 19:00</div>
+                </div>
+                <div class="match-teams">
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(0,0,255,0.1);color:#4488ff">BAH</div>
+                            <span class="team-name">Bahia</span>
+                        </div>
+                        <span class="team-score">-</span>
+                    </div>
+                    <div class="match-team">
+                        <div class="team-info">
+                            <div class="team-logo" style="background:rgba(0,0,128,0.1);color:#3366cc">CRU</div>
+                            <span class="team-name">Cruzeiro</span>
+                        </div>
+                        <span class="team-score">-</span>
+                    </div>
+                </div>
+                <div class="odds-row">
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Bahia vs Cruzeiro', 'Bahia', 'Resultado Final', 2.30)">
+                        <span class="odd-label">1</span><span class="odd-value">2.30</span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Bahia vs Cruzeiro', 'Empate', 'Resultado Final', 3.10)">
+                        <span class="odd-label">X</span><span class="odd-value">3.10</span>
+                    </div>
+                    <div class="odd-btn" onclick="addBetSlip(this, 'Bahia vs Cruzeiro', 'Cruzeiro', 'Resultado Final', 3.20)">
+                        <span class="odd-label">2</span><span class="odd-value">3.20</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BET HISTORY -->
+            <div class="bet-history">
+                <div class="bet-history-header">
+                    <h3><i class="fas fa-history"></i> Histórico de Apostas</h3>
+                    <div class="bet-history-filters">
+                        <button class="filter-btn active" onclick="filterBets(this, 'all')">Todas</button>
+                        <button class="filter-btn" onclick="filterBets(this, 'won')">Ganhas</button>
+                        <button class="filter-btn" onclick="filterBets(this, 'lost')">Perdidas</button>
+                        <button class="filter-btn" onclick="filterBets(this, 'pending')">Pendentes</button>
+                    </div>
+                </div>
+                <div style="overflow-x:auto">
+                    <table class="bet-history-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th><th>Jogo</th><th>Tipo</th><th>Odd</th><th>Valor</th><th>Status</th><th>Lucro/Prejuízo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color:var(--text-muted);font-size:0.75rem">20/05/2024</td>
+                                <td style="font-weight:600">Flamengo vs Palmeiras</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">Resultado Final - Flamengo</td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">2.05</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 100,00</td>
+                                <td><span class="status-badge won">Ganha</span></td>
+                                <td><span class="profit-value positive">+R$ 205,00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color:var(--text-muted);font-size:0.75rem">19/05/2024</td>
+                                <td style="font-weight:600">São Paulo vs Grêmio</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">Resultado Final - São Paulo</td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">1.80</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 50,00</td>
+                                <td><span class="status-badge lost">Perdida</span></td>
+                                <td><span class="profit-value negative">-R$ 50,00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color:var(--text-muted);font-size:0.75rem">18/05/2024</td>
+                                <td style="font-weight:600">Atlético-MG vs Corinthians</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">Resultado Final - Atlético-MG</td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">1.95</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 75,00</td>
+                                <td><span class="status-badge won">Ganha</span></td>
+                                <td><span class="profit-value positive">+R$ 146,25</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color:var(--text-muted);font-size:0.75rem">17/05/2024</td>
+                                <td style="font-weight:600">Bahia vs Cruzeiro</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">Dupla Chance - Bahia ou Empate</td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">1.45</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 60,00</td>
+                                <td><span class="status-badge won">Ganha</span></td>
+                                <td><span class="profit-value positive">+R$ 87,00</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color:var(--text-muted);font-size:0.75rem">16/05/2024</td>
+                                <td style="font-weight:600">Botafogo vs Vasco</td>
+                                <td style="font-size:0.75rem;color:var(--text-muted)">Ambas Marcam - Sim</td>
+                                <td style="font-family:'JetBrains Mono';font-weight:600">1.72</td>
+                                <td style="font-family:'JetBrains Mono'">R$ 40,00</td>
+                                <td><span class="status-badge pending">Pendente</span></td>
+                                <td><span class="profit-value" style="color:var(--text-muted)">-</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR - BET SLIP -->
+        <div class="sidebar-right">
+            <div class="bet-slip" id="betSlip">
+                <div class="bet-slip-header">
+                    <h3>
+                        <i class="fas fa-receipt"></i> Cupom de Apostas
+                        <span class="slip-count" id="slipCount">1</span>
+                    </h3>
+                    <span style="font-size:0.72rem;color:var(--text-muted);cursor:pointer" onclick="clearBetSlip()">Limpar</span>
+                </div>
+                <div class="bet-slip-tabs">
+                    <div class="bet-slip-tab active">Simples</div>
+                    <div class="bet-slip-tab">Múltipla</div>
+                    <div class="bet-slip-tab">Sistema</div>
+                </div>
+                <div class="bet-slip-body" id="betSlipBody">
+                    <div class="bet-item" id="betItem1">
+                        <button class="remove-bet" onclick="removeBet('betItem1')"><i class="fas fa-times"></i></button>
+                        <div class="bet-match">Flamengo vs Palmeiras</div>
+                        <div class="bet-selection">Flamengo</div>
+                        <div class="bet-type">Resultado Final</div>
+                        <div class="bet-odd" id="betOdd1">2.05</div>
+                        <div class="stake-input-container">
+                            <input type="number" class="stake-input" placeholder="R$ 0,00" id="stakeInput1" value="100" oninput="updatePotentialWin()">
+                        </div>
+                        <div class="potential-win">
+                            <span class="label">Retorno possível</span>
+                            <span class="value" id="potentialWin1">R$ 205,00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bet-slip-footer">
+                    <div class="quick-stakes">
+                        <button class="quick-stake-btn" onclick="setStake(25)">R$ 25</button>
+                        <button class="quick-stake-btn" onclick="setStake(50)">R$ 50</button>
+                        <button class="quick-stake-btn" onclick="setStake(100)">R$ 100</button>
+                        <button class="quick-stake-btn" onclick="setStake(200)">R$ 200</button>
+                    </div>
+                    <div class="bet-slip-summary">
+                        <span class="label">Valor total</span>
+                        <span class="value" id="totalStake">R$ 100,00</span>
+                    </div>
+                    <div class="bet-slip-summary">
+                        <span class="label">Retorno total</span>
+                        <span class="value total" id="totalReturn">R$ 205,00</span>
+                    </div>
+                    <button class="btn-place-bet" onclick="placeBet()">
+                        <i class="fas fa-check-circle"></i> Fazer Aposta
+                    </button>
+                </div>
+            </div>
+
+            <!-- LIVE GAMES SIDEBAR -->
+            <div style="margin-top:16px">
+                <div class="section-header">
+                    <div class="section-title" style="font-size:0.88rem">
+                        <i class="fas fa-broadcast-tower" style="color:var(--red-primary)"></i>
+                        Jogos ao Vivo
+                    </div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;padding:14px;margin-bottom:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                        <span style="font-size:0.72rem;color:var(--text-muted)">Brasileirão Série A</span>
+                        <span style="font-size:0.68rem;color:var(--red-primary);font-weight:700;display:flex;align-items:center;gap:4px">
+                            <span style="width:5px;height:5px;background:var(--red-primary);border-radius:50%;animation:pulse-live 1s infinite"></span>
+                            AO VIVO
+                        </span>
+                    </div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:6px">2º Tempo - 75:23</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <span style="font-size:0.82rem;font-weight:600">Internacional</span>
+                            <span style="font-family:'JetBrains Mono';font-weight:700;color:var(--green-primary);font-size:1.1rem">1</span>
+                        </div>
+                        <span style="color:var(--text-muted);font-weight:300">vs</span>
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <span style="font-family:'JetBrains Mono';font-weight:700;color:var(--text-primary);font-size:1.1rem">0</span>
+                            <span style="font-size:0.82rem;font-weight:600">Botafogo</span>
+                        </div>
+                    </div>
+                    <div class="odds-row" style="margin-top:10px">
+                        <div class="odd-btn" style="padding:8px" onclick="addBetSlip(this, 'Internacional vs Botafogo', 'Internacional', 'Resultado Final', 1.30)">
+                            <span class="odd-label">1</span><span class="odd-value" style="font-size:0.82rem">1.30</span>
+                        </div>
+                        <div class="odd-btn" style="padding:8px" onclick="addBetSlip(this, 'Internacional vs Botafogo', 'Empate', 'Resultado Final', 4.50)">
+                            <span class="odd-label">X</span><span class="odd-value" style="font-size:0.82rem">4.50</span>
+                        </div>
+                        <div class="odd-btn" style="padding:8px" onclick="addBetSlip(this, 'Internacional vs Botafogo', 'Botafogo', 'Resultado Final', 8.50)">
+                            <span class="odd-label">2</span><span class="odd-value" style="font-size:0.82rem">8.50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MINHA CONTA -->
+            <div style="margin-top:16px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;padding:16px">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                    <div style="width:44px;height:44px;border-radius:12px;background:var(--gradient-blue);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem">JS</div>
+                    <div>
+                        <div style="font-size:0.88rem;font-weight:700">João Silva</div>
+                        <div style="font-size:0.72rem;color:var(--text-muted)">joao@email.com</div>
+                    </div>
+                </div>
+                <div style="text-align:right;margin-bottom:14px">
+                    <div style="font-size:0.72rem;color:var(--text-muted)">Saldo disponível</div>
+                    <div style="font-family:'JetBrains Mono';font-size:1.2rem;font-weight:800;color:var(--green-primary)">R$ 1.250,75</div>
+                </div>
+                <div style="display:flex;gap:8px">
+                    <button style="flex:1;padding:10px;background:var(--gradient-green);border:none;border-radius:10px;color:#000;font-weight:700;font-size:0.78rem;cursor:pointer" onclick="showDepositModal()">
+                        <i class="fas fa-plus"></i> Depositar
+                    </button>
+                    <button style="flex:1;padding:10px;background:var(--gradient-blue);border:none;border-radius:10px;color:#fff;font-weight:700;font-size:0.78rem;cursor:pointer">
+                        <i class="fas fa-arrow-up"></i> Sacar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE BET SLIP BUTTON -->
+    <div class="mobile-bet-slip-btn" onclick="showToast('Cupom de apostas aberto', 'info')">
+        <i class="fas fa-receipt"></i>
+        <span style="position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:var(--red-primary);border-radius:50%;font-size:0.6rem;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg-primary)">1</span>
+    </div>
+
+    <!-- DEPOSIT MODAL -->
+    <div class="modal-overlay" id="depositModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle" style="color:var(--green-primary)"></i> Depositar</h3>
+                <button class="modal-close" onclick="closeDepositModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Método de Pagamento</label>
+                    <select>
+                        <option>PIX</option>
+                        <option>Transferência Bancária</option>
+                        <option>Cartão de Crédito</option>
+                        <option>Boleto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Valor</label>
+                    <input type="number" placeholder="R$ 0,00" value="100">
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px">
+                    <button class="quick-stake-btn" onclick="this.parentElement.previousElementSibling.querySelector('input').value=50">R$ 50</button>
+                    <button class="quick-stake-btn" onclick="this.parentElement.previousElementSibling.querySelector('input').value=100">R$ 100</button>
+                    <button class="quick-stake-btn" onclick="this.parentElement.previousElementSibling.querySelector('input').value=200">R$ 200</button>
+                    <button class="quick-stake-btn" onclick="this.parentElement.previousElementSibling.querySelector('input').value=500">R$ 500</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="admin-btn secondary" onclick="closeDepositModal()">Cancelar</button>
+                <button class="admin-btn primary" onclick="closeDepositModal(); showToast('Depósito de R$ 100,00 realizado via PIX!', 'success')">
+                    <i class="fas fa-check"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-item"><i class="fas fa-shield-alt"></i> Pagamento Seguro</div>
+                <div class="footer-item"><i class="fas fa-headset"></i> Suporte 24/7</div>
+                <div class="footer-item"><i class="fas fa-exclamation-triangle"></i> Jogo Responsável</div>
+            </div>
+            <div class="footer-center">
+                <span class="footer-link">Termos de Uso</span>
+                <span class="footer-link">Privacidade</span>
+                <span class="footer-link">LGPD</span>
+                <span class="footer-link">FAQ</span>
+            </div>
+            <div class="footer-right">© 2024-2026 BR ROTAS - Todos os direitos reservados</div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
