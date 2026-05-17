@@ -1,38 +1,33 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const connectDB = require('./config/database');
 const securityConfig = require('./config/security');
 const { generalLimiter, authLimiter, betLimiter } = require('./middleware/rateLimiter');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
-const path = require('path');
 
-// Servir frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+// 1. Body parser
+app.use(express.json());
 
-// Rota raiz
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'))
-});
-
-// Tuas rotas da API continuam normal
-app.use('/api/auth', require('./routes/auth'))
-// ... resto das rotas
-// ===== SEGURANÇA =====
+// 2. Segurança - antes de tudo
 securityConfig(app);
 
-// ===== RATE LIMITING =====
+// 3. Rate limit geral
 app.use(generalLimiter);
 
-// ===== ROTAS =====
+// 4. SERVIR FRONTEND - TEM QUE VIR ANTES DAS ROTAS
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// 5. ROTAS DA API
 app.use('/api/auth', authLimiter, require('./routes/auth'));
 app.use('/api/bets', betLimiter, require('./routes/bets'));
 app.use('/api/games', require('./routes/games'));
 app.use('/api/wallet', require('./routes/wallet'));
 app.use('/api/admin', require('./routes/admin'));
 
-// ===== HEALTH CHECK =====
+// 6. Health check
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'OK',
@@ -41,16 +36,20 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// ===== ERROR HANDLER =====
+// 7. Catch-all pro SPA - tem que ser o ÚLTIMO app.get
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
+
+// 8. Error handler - SEMPRE por último
 app.use(errorHandler);
 
-// ===== INICIAR SERVIDOR =====
+// 9. Iniciar servidor
 const PORT = process.env.PORT || 3001;
 
 connectDB().then(() => {
     app.listen(PORT, () => {
-        console.log('🚀 BR ROTAS Server rodando na porta ' + PORT);
-        console.log('📡 API: http://localhost:' + PORT);
-        console.log(' Frontend: http://localhost:3000');
+        console.log(`🚀 BR ROTAS Server rodando na porta ${PORT}`);
+        console.log(`📡 API: http://localhost:${PORT}`);
     });
 });
