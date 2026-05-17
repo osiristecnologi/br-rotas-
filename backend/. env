@@ -1,0 +1,23 @@
+# ===== DATABASE =====
+MONGODB_URI=mongodb://localhost:27017/brrotas
+
+# ===== JWT =====
+JWT_SECRET=br_rotas_super_secret_key_2024_change_in_production
+JWT_REFRESH_SECRET=br_rotas_refresh_secret_key_2024
+JWT_EXPIRES_IN=1h
+JWT_REFRESH_EXPIRES_IN=7d
+
+# ===== SERVER =====
+PORT=3001
+NODE_ENV=development
+
+# ===== CORS =====
+FRONTEND_URL=http://localhost:3000
+
+# ===== API EXTERNA =====
+API_FOOTBALL_KEY=sua_chave_aqui
+SPORTMONKS_KEY=sua_chave_aqui
+
+# ===== RATE LIMIT =====
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX=100
